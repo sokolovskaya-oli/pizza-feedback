@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom';
 import './App.css';
 import FormEmpty from './Components/FormEmpty';
 import TableGuests from './Components/TableGuests';
@@ -17,12 +17,12 @@ function App() {
   const loadGuests = async()=>{
     const response = await fetch(apiUrlGetGuests);
     const data = await response.json()
-    console.log(data.party)
+  
     if (data) {
       const guestFilterData = data.party.filter(({ eatsPizza }) => eatsPizza === true )
      setGuests(data.party);
      setGuestEatPizza(guestFilterData)
-     localStorage.setItem('guests', JSON.stringify(data.party))
+     localStorage.setItem('guests', JSON.stringify(data.party) || "[]")
      return getGuestLink(guestFilterData);
    }
  }
@@ -52,11 +52,9 @@ function App() {
     
      
     <div className="App">
-      
-       <TableGuests guests={guests} />
 
-
-       <FormEmpty />
+       <TableGuests />
+       <FormEmpty/>
     </div>
   );
 }

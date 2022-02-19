@@ -14,6 +14,7 @@ const FormEmpty =()=>{
                 <input type="textarea"/>
             </label>
             <button>Cancel</button>
+            <button>Save</button>
         </form>
     )
 }
