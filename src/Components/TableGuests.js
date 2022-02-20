@@ -1,7 +1,15 @@
 import React, {useState} from "react";
-
+import { NavLink } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 
  function TableGuests (){
+    const history = useHistory()
+    
+    function formView(){
+        history.push(`guest/${value.name}`, value)
+    };
+
+
      const [guests, setGuests]=useState(JSON.parse(localStorage.getItem("guests") || "[]"));
      const guestGray = Object.values(guests).filter(value=>value.eatsPizza===false)
      
@@ -13,42 +21,32 @@ import React, {useState} from "react";
              rezult.push(guest.name)
          }
      });
-     console.log(rezult)
-
-
-    //  Object.values(vegans).every(item=> console.log(guest[item]) ))
-    
-    //  cars.forEach(function(item) {
-    //     if (findObj.brand === item.brand ){
-    //         console.log(item.model);
-    //     }
-    //     });
-
-    //  guest[item] !=vegans[item]
+    //  <NavLink to={`${value.name}`}
     return(
         <table className="table_wrapper">
        <tbody>
-            <tr>
+             <tr>
                 <td>Guests</td>
             </tr>
 
             {Object.values(vegans).map((value, index)=>
                <tr key={index}  > 
-               <td style={{color:"green"}}>{value.name}</td>
+               <td style={{color:"green"}} 
+                onClick={()=>formView()}>{value.name}</td>
            </tr> )}
+
             {Object.values(guestGray).map((value, index)=>
                <tr key={index}  > 
-               <td style={{color:"gray"}}>{value.name}</td>
+               <td style={{color:"gray"}} 
+                onClick={()=>formView()}>{value.name}</td>
                </tr>)}
+
             {rezult.map((value, index)=>
                <tr key={index}  > 
-               <td style={{color:"blue"}}>{value}</td>
+               <td style={{color:"blue"}} 
+                onClick={()=>formView()}>{value}</td>
                </tr>)}
-           
-
-            
-
-           
+             
             </tbody>
         </table>
     )

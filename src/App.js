@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css';
 import FormEmpty from './Components/FormEmpty';
 import TableGuests from './Components/TableGuests';
@@ -52,7 +52,14 @@ function App() {
     
      
     <div className="App">
-
+      {/* <BrowserRouter>
+      
+        <Routes>
+          
+          <Route path="/" exact element={<TableGuests/>} />
+          <Route path="/guest" children={<FormEmpty/>} />
+        </Routes>
+       </BrowserRouter> */}
        <TableGuests />
        <FormEmpty/>
     </div>
