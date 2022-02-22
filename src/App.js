@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Switch, Route} from 'react-router-dom';
 import './App.css';
+import Context from './Components/Context'; 
 import FormEmpty from './Components/FormEmpty';
 import TableGuests from './Components/TableGuests';
+import FeedbackForm from './Components/FeedbackForm';
+
 
 function App() {
 
@@ -11,7 +14,7 @@ function App() {
   const [guestEatPizza, setGuestEatPizza]=useState({})
   const [vegans, setVegans]=useState({})
   const [loading, setLoading] = useState(true);
-
+  const [feedBackArr, setFeedBackArr] = useState(JSON.parse(localStorage.getItem('feedbacks')) || [])
 
 
   const loadGuests = async()=>{
@@ -40,28 +43,39 @@ function App() {
   }
 
   useEffect(() => {  
+    if(!localStorage.getItem('guests')){
      loadGuests().then(URl => {
       if(URl) {
         loadVegans(URl)
       }
      })
-  }, [])   
+  } return
+}, [])   
 
 
   return (
     
      
     <div className="App">
-      {/* <BrowserRouter>
-      
-        <Routes>
-          
-          <Route path="/" exact element={<TableGuests/>} />
-          <Route path="/guest" children={<FormEmpty/>} />
-        </Routes>
-       </BrowserRouter> */}
-       <TableGuests />
-       <FormEmpty/>
+      <BrowserRouter>
+      <Context.Provider value={{feedBackArr, setFeedBackArr}}>
+        <Switch>
+        {/* {!loading ? (<p>loading...</p>) :} */}
+        <Route exact path='/'>
+            <TableGuests />
+          </Route>
+          <Route path='/form/:name'>
+            <FormEmpty />
+          </Route>
+          <Route  path='/feedback/:name'>
+            <FeedbackForm  />
+          </Route>
+
+
+        </Switch>
+        </Context.Provider>
+       </BrowserRouter>
+    
     </div>
   );
 }
