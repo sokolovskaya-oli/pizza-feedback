@@ -1,4 +1,4 @@
-import React, {useState, useContext } from "react";
+import React, {useState, useContext, useEffect } from "react";
 import { useHistory , useLocation } from "react-router-dom";
 import Context from './Context'
 
@@ -13,7 +13,7 @@ function FormEmpty () {
     const [commentDirty, setCommentDirty]=useState(false)
     const [phoneError, setPhoneError]=useState('Номер телефонна пуст')
     const [commentError, setCommentError]=useState('Напишите комментарий')
-    const [phone,setPhone]=useState()
+    const [formValid,setFormValid]=useState(false)
 
     const handlClickSave=()=>{
         feedBackArr.push(form)
@@ -35,21 +35,30 @@ function FormEmpty () {
                 setCommentDirty(true)
                 break
     }
-
- 
-     })
+    })
 
      const phoneHandler=(e)=>{
          console.log(e.target.value)
          setForm({ ...form, phone:e.target.value })
-       let phoneNo = /^(\+375)?(\d{2})?[\-]?([\d]{3}-[\d]{2}-[\d]{2})$/g;
-       // +375 29-602-66-22
-        if (!e.target.value.test(phoneNo)) {
-            setPhoneError('Номер телефонна введен неверно')
+       let phoneNo = /[\+]375\s[\(]\d{2}[\)]\s\d{3}[\- ]\d{2}[\- ]\d{2}/;
+      
+        if (phoneNo.test(e.target.value)) {
+            setPhoneError('')
         } else {
-            setPhoneError(" ")
+            setPhoneError('Номер телефонна введен неверно')
         }
      }
+     const commentHandler=(e)=>{
+        console.log(e.target.value)
+        setForm({ ...form, comment:e.target.value })
+    
+     
+       if (e.target.value.length >2)  {
+           setCommentError('')
+       } else {
+           setCommentError('Добавьте комментарий')
+       }
+    }
 
     return(
         <form>
@@ -60,6 +69,7 @@ function FormEmpty () {
                 {phoneDirty && phoneError && <div style={{color:'red'}}>{phoneError}</div>}
                 <input type="phone"
                         name="phone"
+                        placeholder="Используйте формат: +375 (33) 333-33-33"
                         value={form.phone}
                         onChange={e=>phoneHandler(e)}
                         onBlur={e=>blurHandler(e)}
@@ -71,13 +81,13 @@ function FormEmpty () {
                 <input type="textarea"
                       name="comment"
                       value={form.comment} 
-                      onChange={e=>setForm({ ...form, comment:e.target.value })}
+                      onChange={e=>commentHandler(e)}
                       onBlur={e=>blurHandler(e)} 
                 />
             </label>
             
             {(form.phone.length > 8 && form.comment.length > 2) ?
-              <button onClick={()=>handlClickSave()}>Save</button> :
+              <button disabled={formValid} onClick={()=>handlClickSave()}>Save</button> :
                <button onClick={()=>handlClick()}>Cancel</button>
             }
         </form>
