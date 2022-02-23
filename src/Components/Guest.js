@@ -19,7 +19,7 @@ const Guest = ({value, index, style}) =>{
     function checkFeedBack(){
         if(feedBackArr.find(({name})=>name == value)){
             setLable(!lable)
-        }return
+        }
     }
 
     useEffect(()=>{
@@ -32,7 +32,7 @@ const Guest = ({value, index, style}) =>{
         <tr key={index}> 
         
             <td style={style} onClick={()=>formView()}>
-             <span style={{color: 'red', fontWeight: 'bold'}}>{lable ? '✅ ' : ''}</span>
+             <span style={{color: 'green', fontWeight: 'bold'}}>{lable ? String.fromCharCode(10003) : ''}</span>
                 {value}
                 </td>
         </tr>

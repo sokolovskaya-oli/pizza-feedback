@@ -5,17 +5,17 @@ import Context from './Components/Context';
 import FormEmpty from './Components/FormEmpty';
 import TableGuests from './Components/TableGuests';
 import FeedbackForm from './Components/FeedbackForm';
-
+import BtnDeleteAll from './Components/BtnDeleleAll';
 
 function App() {
 
   const apiUrlGetGuests = 'https://gp-js-test.herokuapp.com/pizza/guests';
-  const [guests, setGuests]=useState({})
+  const [guests, setGuests]=useState(JSON.parse(localStorage.getItem("guests") || "[]"));
   const [guestEatPizza, setGuestEatPizza]=useState({})
-  const [vegans, setVegans]=useState({})
+  const [vegans, setVegans]=useState(JSON.parse(localStorage.getItem("vegans") || "[]"));
   const [loading, setLoading] = useState(true);
   const [feedBackArr, setFeedBackArr] = useState(JSON.parse(localStorage.getItem('feedbacks')) || [])
-
+  const [clearApp, setClearApp] = useState(false)
 
   const loadGuests = async()=>{
     const response = await fetch(apiUrlGetGuests);
@@ -44,34 +44,47 @@ function App() {
 
   useEffect(() => {  
     if(!localStorage.getItem('guests')){
+      setLoading(true)
      loadGuests().then(URl => {
       if(URl) {
-        loadVegans(URl)
+        loadVegans(URl).then(setLoading(false))
       }
      })
-  } return
-}, [])   
+  } 
+ }, [])   
 
+useEffect(() => {  
+  if(!localStorage.getItem('guests')){
+    setLoading(true)
+   loadGuests().then(URl => {
+    if(URl) {
+      loadVegans(URl).then(setLoading(false))
+    }
+   })
+} 
+setClearApp(false)
+}, [clearApp])   
 
   return (
     
      
     <div className="App">
       <BrowserRouter>
-      <Context.Provider value={{feedBackArr, setFeedBackArr}}>
+      <Context.Provider value={{feedBackArr, setFeedBackArr, guests, vegans}}>
         <Switch>
-        {/* {!loading ? (<p>loading...</p>) :} */}
-        <Route exact path='/'>
-            <TableGuests />
+       {!loading ? 'Loading...' :
+          <Route exact path='/'>
+             <BtnDeleteAll clearApp={clearApp} setClearApp={setClearApp}/>
+            <TableGuests guests={guests} vegans={vegans} />
           </Route>
+          }
           <Route path='/form/:name'>
             <FormEmpty />
           </Route>
+          
           <Route  path='/feedback/:name'>
             <FeedbackForm  />
           </Route>
-
-
         </Switch>
         </Context.Provider>
        </BrowserRouter>

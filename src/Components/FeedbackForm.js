@@ -2,7 +2,7 @@ import React from 'react'
 import { useContext } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import Context from './Context'
-
+import { Rate } from 'antd';
 
 const FeedbackForm = () =>{
     const {feedBackArr, setFeedBackArr} = useContext(Context)
@@ -13,7 +13,6 @@ const FeedbackForm = () =>{
    
     function deleteFeedback(){
         let clearedFedbacks = feedBackArr.filter(item => item.name != guestName)
-        console.log(clearedFedbacks)
         localStorage.setItem('feedbacks', JSON.stringify(clearedFedbacks))
         setFeedBackArr(JSON.parse(localStorage.getItem('feedbacks')))
         history.push('/')
@@ -21,14 +20,17 @@ const FeedbackForm = () =>{
 
     return(
         <div>
-            <h1>FEEDBACK</h1>
-            <span>name</span>
+                  
             <button onClick={()=>deleteFeedback()}>delete</button>
+            <span>name</span>
             <p>{data.name}</p>
+            <div className="products_product_stars">
+                 <Rate  defaultValue={5} />
+            </div>
             <span>phone</span>
             <p>{data.phone}</p>
             <span>comment</span>
-            <p>{data.text}</p>
+            <p>{data.comment}</p>
         </div>
     )
 }

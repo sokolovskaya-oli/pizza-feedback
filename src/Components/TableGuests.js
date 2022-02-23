@@ -1,21 +1,26 @@
 import React, {useState} from "react";
 import Guest from "./Guest";
 
- function TableGuests (){
- 
-     const [guests, setGuests]=useState(JSON.parse(localStorage.getItem("guests") || "[]"));
+
+ function TableGuests ({guests, vegans}){
+   
+    // const [guests, setGuests]=useState(JSON.parse(localStorage.getItem("guests") || "[]"));
      const guestGray = Object.values(guests).filter(value=>value.eatsPizza===false)
-     
-     const [vegans, setVegans]=useState(JSON.parse(localStorage.getItem("vegans") || "[]"));
+    
+    // const [vegans, setVegans]=useState(JSON.parse(localStorage.getItem("vegans") || "[]"));
      const blueGuest= Object.values(guests).filter(value=>value.eatsPizza===true)
      const rezult = []
 
-     blueGuest.forEach(function(guest){
-         if(vegans.name != guest.name){
-             rezult.push(guest.name)
-         }
-     });
-   
+// for(i=0, i<= blueGuest.length, i++){
+
+// }
+         console.log(vegans);
+         console.log(blueGuest.length)
+        //  if(vegans.name !== guest.name){
+        //      rezult.push(guest.name)
+        //  }
+  
+   console.log(rezult)
     return(
         <table className="table_wrapper">
        <tbody>
@@ -31,7 +36,6 @@ import Guest from "./Guest";
                    /> 
                )}
    
-
             {Object.values(guestGray).map((value, index)=>
                    <Guest 
                    key={index}
@@ -40,8 +44,6 @@ import Guest from "./Guest";
                    />
               )}
 
-
-
             {rezult.map((value, index)=>
                  <Guest 
                  key={index}
@@ -49,7 +51,6 @@ import Guest from "./Guest";
                  style={{color:'blue'}}
              />
             )}
-
              
             </tbody>
         </table>
