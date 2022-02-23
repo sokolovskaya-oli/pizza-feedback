@@ -9,18 +9,26 @@ import Guest from "./Guest";
     
     // const [vegans, setVegans]=useState(JSON.parse(localStorage.getItem("vegans") || "[]"));
      const blueGuest= Object.values(guests).filter(value=>value.eatsPizza===true)
-     const rezult = []
-
-// for(i=0, i<= blueGuest.length, i++){
-
-// }
-         console.log(vegans);
-         console.log(blueGuest.length)
+    
+     let result = {};
+     const func = (blueGuest, vegans) => {
+        
+        for (let prop in blueGuest) {
+            if (!vegans.hasOwnProperty(prop)) result[prop] = blueGuest[prop];
+        }
+        return result;
+    }
+    func(blueGuest, vegans)
+    let ffff=Object.values(result).map(item=> item.name)
+    console.log(ffff)
+    console.log(result)
+    console.log(vegans)
+         
         //  if(vegans.name !== guest.name){
         //      rezult.push(guest.name)
         //  }
   
-   console.log(rezult)
+
     return(
         <table className="table_wrapper">
        <tbody>
@@ -44,7 +52,7 @@ import Guest from "./Guest";
                    />
               )}
 
-            {rezult.map((value, index)=>
+            {Object.values(ffff).map((value, index)=>
                  <Guest 
                  key={index}
                  value={value}
