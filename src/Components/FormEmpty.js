@@ -66,9 +66,8 @@ function FormEmpty () {
 
     return(
         <form onSubmit={(event)=>event.preventDefault()}>
-            <p>Name</p>
-            <h2>{value} </h2>
-            <div className="products_product_stars">
+            <h3> {value}</h3>
+            <div className="form__stars">
                  <Rate tooltips={desc} defaultValue={3} onChange={(rate)=>handleChange(rate)} rate={rate} />
             </div>
             <div className="phone-field">
@@ -97,8 +96,8 @@ function FormEmpty () {
                 </label>
             </div>
             {(form.phone.length > 8 && form.comment.length > 2) ?
-              <button disabled={formValid} onClick={()=>handlClickSave()}>Save</button> :
-               <button onClick={()=>handlClick()}>Cancel</button>
+              <button className='btn_form btn_delete' disabled={formValid} onClick={()=>handlClickSave()}>Save</button> :
+               <button className='btn_form btn_delete' onClick={()=>handlClick()}>Cancel</button>
             }
         </form>
     )

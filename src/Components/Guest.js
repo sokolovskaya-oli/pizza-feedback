@@ -32,7 +32,7 @@ const Guest = ({value, index, style}) =>{
         <tr key={index}> 
         
             <td style={style} onClick={()=>formView()}>
-             <span style={{color: 'green', fontWeight: 'bold'}}>{lable ? String.fromCharCode(10003) : ''}</span>
+             <span style={{color: 'green', fontWeight: '700'}}>{lable ? String.fromCharCode(10004) : ''}</span>
                 {value}
                 </td>
         </tr>

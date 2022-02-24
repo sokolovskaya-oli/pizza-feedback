@@ -6,6 +6,7 @@ import FormEmpty from './Components/FormEmpty';
 import TableGuests from './Components/TableGuests';
 import FeedbackForm from './Components/FeedbackForm';
 import BtnDeleteAll from './Components/BtnDeleleAll';
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 function App() {
 
@@ -41,42 +42,46 @@ function App() {
         localStorage.setItem('vegans', JSON.stringify(data.diet.filter(({ isVegan })=> isVegan === true)))
         } 
   }
-
   useEffect(() => {  
+    setLoading(true)
     if(!localStorage.getItem('guests')){
-      setLoading(true)
-     loadGuests().then(URl => {
+    
+    loadGuests().then(URl => {
       if(URl) {
         loadVegans(URl).then(setLoading(false))
       }
-     })
+    })
   } 
- }, [])   
+  setClearApp(false)
+  }, [clearApp])  
 
-useEffect(() => {  
-  if(!localStorage.getItem('guests')){
-    setLoading(true)
-   loadGuests().then(URl => {
-    if(URl) {
-      loadVegans(URl).then(setLoading(false))
-    }
-   })
-} 
-setClearApp(false)
-}, [clearApp])   
+  // useEffect(() => {  
+  //   setLoading(true)
+  //   if(!localStorage.getItem('guests')){
+      
+  //   loadGuests().then(URl => {
+  //     if(URl) {
+  //       loadVegans(URl).then(setLoading(false))
+  //     }
+  //   })
+  // } 
+  // }, []) 
+
 
   return (
-    
-     
     <div className="App">
       <BrowserRouter>
-      <Context.Provider value={{feedBackArr, setFeedBackArr, guests, vegans}}>
+      <Context.Provider value={{feedBackArr, setFeedBackArr, guests, vegans, loading, setLoading}}>
         <Switch>
-       {!loading ? 'Loading...' :
+       {loading ?
+        <PropagateLoader 
+            color={"#3650D7"} 
+            loading={loading} 
+            size={30} /> :
           <Route exact path='/'>
-             <BtnDeleteAll clearApp={clearApp} setClearApp={setClearApp}/>
+             <BtnDeleteAll clearApp={clearApp} setClearApp={setClearApp} loading={loading} setLoading={setLoading} />
             <TableGuests guests={guests} vegans={vegans} />
-          </Route>
+          </Route>  
           }
           <Route path='/form/:name'>
             <FormEmpty />

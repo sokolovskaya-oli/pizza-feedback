@@ -12,25 +12,26 @@ const FeedbackForm = () =>{
     const data = feedBackArr.find(item => item.name === guestName)
    
     function deleteFeedback(){
-        let clearedFedbacks = feedBackArr.filter(item => item.name != guestName)
+        let clearedFedbacks = feedBackArr.filter(item => item.name !== guestName)
         localStorage.setItem('feedbacks', JSON.stringify(clearedFedbacks))
         setFeedBackArr(JSON.parse(localStorage.getItem('feedbacks')))
         history.push('/')
     }
 
     return(
-        <div>
-                  
-            <button onClick={()=>deleteFeedback()}>delete</button>
-            <span>name</span>
-            <p>{data.name}</p>
-            <div className="products_product_stars">
+        <div className='feedback_form__wrapper'>
+            <button className='btn_feedback btn_delete' onClick={()=>deleteFeedback()}>delete</button>
+            <div className="form__stars">
                  <Rate  defaultValue={5} />
             </div>
-            <span>phone</span>
-            <p>{data.phone}</p>
-            <span>comment</span>
-            <p>{data.comment}</p>
+            <div className='feedback_form__capture'>
+                <h3>Name:</h3>    
+                <p>{data.name}</p>
+                <h3>Phone:</h3>
+                <p>{data.phone}</p>
+                <h3>Comment:</h3>
+                <p>{data.comment}</p>
+            </div>
         </div>
     )
 }
