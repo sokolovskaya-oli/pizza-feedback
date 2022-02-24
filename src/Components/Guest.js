@@ -10,10 +10,9 @@ const Guest = ({value, index, style}) =>{
     
     function formView(){
         if(feedBackArr.find(({name})=>name == value)){
-             
             history.push(`feedback/${value}`, value)
         }else{
-            history.push(`form/${value}`, value)
+            history.push(`/${value}`, value)
         }
     }
     function checkFeedBack(){
@@ -30,8 +29,7 @@ const Guest = ({value, index, style}) =>{
     return(
         
         <tr key={index}> 
-        
-            <td style={style} onClick={()=>formView()}>
+             <td style={style} onClick={()=>formView()}>
              <span style={{color: 'green', fontWeight: '700'}}>{lable ? String.fromCharCode(10004) : ''}</span>
                 {value}
                 </td>

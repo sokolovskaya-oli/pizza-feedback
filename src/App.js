@@ -10,7 +10,7 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 
 function App() {
 
-  const apiUrlGetGuests = 'https://gp-js-test.herokuapp.com/pizza/guests';
+  const apiGetGuests = 'https://gp-js-test.herokuapp.com/pizza/guests';
   const [guests, setGuests]=useState(JSON.parse(localStorage.getItem("guests") || "[]"));
   const [guestEatPizza, setGuestEatPizza]=useState({})
   const [vegans, setVegans]=useState(JSON.parse(localStorage.getItem("vegans") || "[]"));
@@ -19,7 +19,7 @@ function App() {
   const [clearApp, setClearApp] = useState(false)
 
   const loadGuests = async()=>{
-    const response = await fetch(apiUrlGetGuests);
+    const response = await fetch(apiGetGuests);
     const data = await response.json()
   
     if (data) {
@@ -44,29 +44,16 @@ function App() {
   }
   useEffect(() => {  
     setLoading(true)
-    if(!localStorage.getItem('guests')){
-    
-    loadGuests().then(URl => {
-      if(URl) {
-        loadVegans(URl).then(setLoading(false))
+     if(!localStorage.getItem('guests')){
+        
+      loadGuests().then(URl => {
+        if(URl) {
+          loadVegans(URl).then(setLoading(false))
       }
     })
   } 
-  setClearApp(false)
+    setClearApp(false)
   }, [clearApp])  
-
-  // useEffect(() => {  
-  //   setLoading(true)
-  //   if(!localStorage.getItem('guests')){
-      
-  //   loadGuests().then(URl => {
-  //     if(URl) {
-  //       loadVegans(URl).then(setLoading(false))
-  //     }
-  //   })
-  // } 
-  // }, []) 
-
 
   return (
     <div className="App">
@@ -77,13 +64,13 @@ function App() {
         <PropagateLoader 
             color={"#3650D7"} 
             loading={loading} 
-            size={30} /> :
+            size={30} /> : (
           <Route exact path='/'>
-             <BtnDeleteAll clearApp={clearApp} setClearApp={setClearApp} loading={loading} setLoading={setLoading} />
+             <BtnDeleteAll clearApp={clearApp} setClearApp={setClearApp} />
             <TableGuests guests={guests} vegans={vegans} />
-          </Route>  
+          </Route> ) 
           }
-          <Route path='/form/:name'>
+          <Route path='/:name'>
             <FormEmpty />
           </Route>
           

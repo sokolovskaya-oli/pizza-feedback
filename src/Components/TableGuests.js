@@ -4,18 +4,18 @@ import Guest from "./Guest";
 
  function TableGuests ({guests, vegans}){
    
-     const guestGray = Object.values(guests).filter(value=>value.eatsPizza===false)
+     const grayGuests = Object.values(guests).filter(value=>value.eatsPizza===false)
      const blueGuest= Object.values(guests).filter(value=>value.eatsPizza===true)
      let result = {};
-     const func = (blueGuest, vegans) => {
+     const filtring = (blueGuest, vegans) => {
         for (let prop in blueGuest) {
             if (!vegans.hasOwnProperty(prop)) result[prop] = blueGuest[prop];
         }
         return result;
     }
 
-    func(blueGuest, vegans)
-    let ffff=Object.values(result).map(item=> item.name)
+    filtring(blueGuest, vegans)
+    let meatsGuests=Object.values(result).map(item=> item.name)
   
     return(
         <table className="table_wrapper">
@@ -32,7 +32,7 @@ import Guest from "./Guest";
                    /> 
                )}
    
-            {Object.values(guestGray).map((value, index)=>
+            {Object.values(grayGuests).map((value, index)=>
                    <Guest 
                    key={index}
                    value={value.name}
@@ -40,7 +40,7 @@ import Guest from "./Guest";
                    />
               )}
 
-            {Object.values(ffff).map((value, index)=>
+            {Object.values(meatsGuests).map((value, index)=>
                  <Guest 
                  key={index}
                  value={value}

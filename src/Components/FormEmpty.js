@@ -6,7 +6,7 @@ import { Rate } from 'antd';
 function FormEmpty () {
     const history = useHistory()
     const location = useLocation()
-    const  value = location.state
+    const value = location.state
     const guestName = value 
     const {feedBackArr, setFeedBackArr} = useContext(Context)
     const [form, setForm]=useState({name: guestName, phone:'', comment:''})
@@ -75,7 +75,7 @@ function FormEmpty () {
                     {phoneDirty && phoneError && <div style={{color:'red'}}>{phoneError}</div>}
                     <input type="phone"
                             name="phone"
-                            placeholder="Напр: +375 (33) 333-33-33"
+                            placeholder="Напр: +375 (29) 111-22-33"
                             value={form.phone}
                             onChange={e=>phoneHandler(e)}
                             onBlur={e=>blurHandler(e)}

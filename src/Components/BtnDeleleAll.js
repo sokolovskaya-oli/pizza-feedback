@@ -1,16 +1,15 @@
 import React from 'react'
 
 
-const BtnDeleteAll = ({setClearApp, clearApp, loading, setLoading})=>{
+const BtnDeleteAll = ({setClearApp, loading, setLoading})=>{
 
-    function clearApp(){
+    const deleteAll=()=>{
         localStorage.clear()
         setClearApp(true)    
-        setLoading(!loading)  
-    }
+     }
 
     return(
-            <button className="btn_delete" onClick={clearApp}> Delete All</button>
+            <button className="btn_delete" onClick={deleteAll}> Delete All</button>
     )
 }
 export default BtnDeleteAll
